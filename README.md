@@ -1,3 +1,3 @@
 # YelpCamp
 
-you can see all the campgrounds and add more campgrounds via form
+a platform where you can view the added campgrounds and add more campgrounds via form using nodejs, express

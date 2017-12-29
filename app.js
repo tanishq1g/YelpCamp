@@ -15,15 +15,9 @@ app.set('view engine','ejs');
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 
-
-//SCHEMA setup
-var campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-var Campground = mongoose.model('Campground', campgroundSchema);
-
+var Campground = require('./models/campground');
+var Comment = require('./models/comment');
+var User = require('./models/user');
 
 // adds to database
 // Campground.create(

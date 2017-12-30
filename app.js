@@ -19,6 +19,20 @@ app.use(express.static(__dirname + '/public'));
 console.log(__dirname);
 seedDB();
 
+
+var campgroundRoutes = require('./routes/campgrounds');
+var commentRoutes = require('./routes/comments');
+
+
+app.use('/campgrounds', campgroundRoutes);
+app.use('/campgrounds/:id/comments', commentRoutes);
+
+//landing page
+app.get('/',function(req,res){
+    res.render("landing");
+});
+
+
 // seedDB();
 // adds to database
 // Campground.create(
@@ -49,111 +63,6 @@ seedDB();
 
 
 
-//landing page
-app.get('/',function(req,res){
-    res.render("landing");
-});
-
-
-//INDEX - GET  - displays list of all campgrounds
-app.get('/campgrounds',function(req,res){
-    // res.render('campgrounds',{campgrounds: campgrounds});
-    //retrieve campgroudns from the database
-    Campground.find(function(err,allcampgrounds){
-        if(err){
-            console.log(err);
-        }
-        else{
-            //redirect to campgrounds page
-            res.render('campgrounds/index',{campgrounds: allcampgrounds});
-        }
-    });
-});
-
-//CREATE - POST - add content to db
-app.post('/campgrounds', function(req,res){
-    var name = req.body.name;
-    var image = req.body.image;
-    var desc = req.body.description;
-    var newCampground = {name: name, image: image, description : desc};
-    //create a new campground and save to database
-    Campground.create(newCampground, function(err, newlyCreated){
-        if(err){
-            console.log(err);
-        }
-        else{
-            res.redirect('campgrounds/index');
-        }
-    });
-    // campgrounds.push({name: name, image: image});
-    // res.redirect('campgrounds');
-});
-
-//NEW - GET - /dogs/new - to show the form that will call the post route
-app.get('/campgrounds/new',function(req,res){
-    res.render('campgrounds/new');
-});
-
-//SHOW - GET - shows info about 1 campground
-app.get('/campgrounds/:id',function(req,res){
-    console.log(req.params.id);
-    //find the campground with provided id and then show the prticular campground
-    Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(foundCampground);
-            res.render("campgrounds/show", {
-                campground: foundCampground
-            });
-        }
-    });
-});
-
-//CREATE - POST - add content to db
-app.post('/campgrounds/:id/comments',function(req,res){
-    Campground.findById(req.params.id, function(err, foundCampground){
-        if(err){
-            console.log(err);
-        }
-        else{
-            console.log(foundCampground);
-            Comment.create(req.body.comment,function(err,createdComment){
-                if(err){
-                    console.log(err);
-                }
-                else{
-                    console.log(createdComment);
-                    foundCampground.comments.push(createdComment);
-                    foundCampground.save();
-                    res.redirect('/campgrounds/'+req.params.id);
-                }
-            });
-        }
-    });
-});
-
-
-
-
-
-//================================
-
-//NEW - get - to get the form to add new comment and then call the post route
-app.get('/campgrounds/:id/comments/new',function(req,res){
-    Campground.findById(req.params.id, function(err,foundCampground){
-        if (err) {
-            console.log(err)
-        }
-        else {
-            res.render('comments/new',{campground: foundCampground});
-        }
-    });
-});
-
-
-
-app.get('/campgrounds/:id/')
 
 app.listen(8081, (req, res) => {
     console.log("listening...");

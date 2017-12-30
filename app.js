@@ -17,7 +17,7 @@ mongoose.Promise = global.Promise;
 
 
 
-seedDB();
+// seedDB();
 
 // seedDB();
 // adds to database
@@ -55,7 +55,7 @@ app.get('/',function(req,res){
 });
 
 
-//INDEX - GET - /dogs - displays list of all campgrounds
+//INDEX - GET  - displays list of all campgrounds
 app.get('/campgrounds',function(req,res){
     // res.render('campgrounds',{campgrounds: campgrounds});
     //retrieve campgroudns from the database
@@ -65,12 +65,12 @@ app.get('/campgrounds',function(req,res){
         }
         else{
             //redirect to campgrounds page
-            res.render('index',{campgrounds: allcampgrounds});
+            res.render('campgrounds/index',{campgrounds: allcampgrounds});
         }
     });
 });
 
-//CREATE - POST - /dogs -add conent to db
+//CREATE - POST - add content to db
 app.post('/campgrounds', function(req,res){
     var name = req.body.name;
     var image = req.body.image;
@@ -82,7 +82,7 @@ app.post('/campgrounds', function(req,res){
             console.log(err);
         }
         else{
-            res.redirect('index');
+            res.redirect('campgrounds/index');
         }
     });
     // campgrounds.push({name: name, image: image});
@@ -91,10 +91,10 @@ app.post('/campgrounds', function(req,res){
 
 //NEW - GET - /dogs/new - to show the form that will call the post route
 app.get('/campgrounds/new',function(req,res){
-    res.render('new');
+    res.render('campgrounds/new');
 });
 
-//SHOW - GET - /dogs/:id - shows info about 1 dog
+//SHOW - GET - shows info about 1 campground
 app.get('/campgrounds/:id',function(req,res){
     console.log(req.params.id);
     //find the campground with provided id and then show the prticular campground
@@ -103,7 +103,7 @@ app.get('/campgrounds/:id',function(req,res){
             console.log(err);
         } else {
             console.log(foundCampground);
-            res.render("show", {
+            res.render("campgrounds/show", {
                 campground: foundCampground
             });
         }
@@ -113,6 +113,26 @@ app.get('/campgrounds/:id',function(req,res){
 
 
 
+
+
+
+//================================
+
+//NEW - get - to get the form to add new comment and then call the post route
+app.get('/campgrounds/:id/comments/new',function(req,res){
+    Campground.findById(req.params.id, function(err,foundCampground){
+        if (err) {
+            console.log(err)
+        }
+        else {
+            res.render('comments/new',{campground: foundCampground});
+        }
+    });
+});
+
+
+
+app.get('/campgrounds/:id/')
 
 app.listen(8081, (req, res) => {
     console.log("listening...");

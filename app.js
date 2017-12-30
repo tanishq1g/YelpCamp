@@ -15,8 +15,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 mongoose.Promise = global.Promise;
 
-
-
+app.use(express.static(__dirname + '/public'));
+console.log(__dirname);
 seedDB();
 
 // seedDB();

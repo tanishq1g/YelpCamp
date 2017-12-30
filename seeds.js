@@ -52,7 +52,7 @@ function seedDB(){
                         campground.comments.push(comment.id);
                         campground.save();
                         console.log("Created new comment");
-                        console.log(campground);
+                        // console.log(campground);
                     }
                 });
             }

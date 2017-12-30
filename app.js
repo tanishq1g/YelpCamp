@@ -17,7 +17,7 @@ mongoose.Promise = global.Promise;
 
 
 
-// seedDB();
+seedDB();
 
 // seedDB();
 // adds to database
@@ -110,7 +110,28 @@ app.get('/campgrounds/:id',function(req,res){
     });
 });
 
-
+//CREATE - POST - add content to db
+app.post('/campgrounds/:id/comments',function(req,res){
+    Campground.findById(req.params.id, function(err, foundCampground){
+        if(err){
+            console.log(err);
+        }
+        else{
+            console.log(foundCampground);
+            Comment.create(req.body.comment,function(err,createdComment){
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    console.log(createdComment);
+                    foundCampground.comments.push(createdComment);
+                    foundCampground.save();
+                    res.redirect('/campgrounds/'+req.params.id);
+                }
+            });
+        }
+    });
+});
 
 
 

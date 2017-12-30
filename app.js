@@ -13,6 +13,7 @@ app.set('view engine','ejs');
 //for post routes
 app.use(bodyParser.urlencoded({extended: true}));
 
+mongoose.Promise = global.Promise;
 
 
 
@@ -95,14 +96,16 @@ app.get('/campgrounds/new',function(req,res){
 
 //SHOW - GET - /dogs/:id - shows info about 1 dog
 app.get('/campgrounds/:id',function(req,res){
+    console.log(req.params.id);
     //find the campground with provided id and then show the prticular campground
-    Campground.findById(req.params.id, function(err, foundCampground){
-        if(err){
+    Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground) {
+        if (err) {
             console.log(err);
-        }
-        else{
-
-            res.render('show',{campground: foundCampground});
+        } else {
+            console.log(foundCampground);
+            res.render("show", {
+                campground: foundCampground
+            });
         }
     });
 });

@@ -1,24 +1,24 @@
 var express = require('express');
 var app = express();
-
-
-//connecting to database
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost/yelp_camp");
-
-
-//setting up all rendered files to be ejs files
-app.set('view engine','ejs');
-
-
-//for post routes
 var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended: true}));
-
 var Campground = require('./models/campground');
 var Comment = require('./models/comment');
-var User = require('./models/user');
+var seedDB = require('./seeds');
 
+//connecting to database
+mongoose.connect("mongodb://localhost/yelp_camp_v");
+//setting up all rendered files to be ejs files
+app.set('view engine','ejs');
+//for post routes
+app.use(bodyParser.urlencoded({extended: true}));
+
+
+
+
+seedDB();
+
+// seedDB();
 // adds to database
 // Campground.create(
 //     // {
@@ -46,10 +46,13 @@ var User = require('./models/user');
 //     {name : 'bolomon',image : "https://www.holidify.com/blog/wp-content/uploads/2016/08/camp-room-on-the-roof.jpg"}
 // ];
 
+
+
 //landing page
 app.get('/',function(req,res){
     res.render("landing");
 });
+
 
 //INDEX - GET - /dogs - displays list of all campgrounds
 app.get('/campgrounds',function(req,res){
@@ -103,6 +106,8 @@ app.get('/campgrounds/:id',function(req,res){
         }
     });
 });
+
+
 
 
 

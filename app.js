@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var Campground = require('./models/campground');
 var Comment = require('./models/comment');
 var seedDB = require('./seeds');
-
+var methodOverride = require('method-override')
 
 
 var passport = require('passport')
@@ -28,6 +28,7 @@ app.use(express.static(__dirname + '/public'));
 console.log(__dirname);
 // seedDB();
 
+app.use(methodOverride('_method'))
 
 
 // PASSPORT CONFIGURATION

@@ -46,14 +46,17 @@ passport.deserializeUser(User.deserializeUser())
 
 
 
+
+
 var campgroundRoutes = require('./routes/campgrounds');
 var commentRoutes = require('./routes/comments');
-
+var authRoutes = require('./routes/auths')
 
 
 
 app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
+app.use('/auths', authRoutes);
 
 //landing page
 app.get('/',function(req,res){

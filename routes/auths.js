@@ -35,4 +35,14 @@ router.post('/login', passport.authenticate('local' ,{
 }),function(req,res){
 
 })
+
+
+//LOGOUT ROUTES
+
+router.get('/logout',function(req,res){
+    req.logout()
+    res.redirect('/')
+})
+
+
 module.exports = router;

@@ -2,10 +2,11 @@ var express = require('express');
 var router = express.Router({mergeParams: true});
 var Campground = require('../models/campground');
 var Comment = require('../models/comment');
+var passport = require('passport')
 
 
 //NEW - get - to get the form to add new comment and then call the post route
-router.get('/new',function(req,res){
+router.get('/new',isLoggedIn, function(req,res){
     Campground.findById(req.params.id, function(err,foundCampground){
         if (err) {
             console.log(err)
@@ -16,7 +17,7 @@ router.get('/new',function(req,res){
     });
 });
 //CREATE - POST - add content to db
-router.post('/',function(req,res){
+router.post('/',isLoggedIn, function(req,res){
     Campground.findById(req.params.id, function(err, foundCampground){
         if(err){
             console.log(err);
@@ -38,5 +39,11 @@ router.post('/',function(req,res){
     });
 });
 
+function isLoggedIn(req,res,next){
+    if(req.isAuthenticated()){
+        return next()
+    }
+    res.redirect('/auths/login')
+}
 
 module.exports = router;

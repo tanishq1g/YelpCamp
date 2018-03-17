@@ -29,6 +29,23 @@ console.log(__dirname);
 seedDB();
 
 
+
+// PASSPORT CONFIGURATION
+
+app.use(require('express-session')({
+    secret : "passport secret message",
+    resave : false,
+    saveUninitialized : false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+
+passport.use(new localStrategy(User.authenticate()))
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
+
+
+
 var campgroundRoutes = require('./routes/campgrounds');
 var commentRoutes = require('./routes/comments');
 

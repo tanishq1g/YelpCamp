@@ -6,6 +6,15 @@ var Campground = require('./models/campground');
 var Comment = require('./models/comment');
 var seedDB = require('./seeds');
 
+
+
+var passport = require('passport')
+var localStrategy = require('passport-local')
+
+var User = require('./models/user')
+
+
+
 //connecting to database
 mongoose.connect("mongodb://localhost/yelp_camp_v");
 //setting up all rendered files to be ejs files
@@ -22,6 +31,8 @@ seedDB();
 
 var campgroundRoutes = require('./routes/campgrounds');
 var commentRoutes = require('./routes/comments');
+
+
 
 
 app.use('/campgrounds', campgroundRoutes);

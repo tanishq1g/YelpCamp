@@ -59,7 +59,7 @@ app.use('/campgrounds/:id/comments', commentRoutes);
 app.use('/auths', authRoutes);
 
 
-
+//to call the function on every route
 app.use(function(req,res,next){
     res.locals.currentUser = req.user
     next()

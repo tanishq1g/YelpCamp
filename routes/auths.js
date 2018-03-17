@@ -5,7 +5,9 @@ var passport = require('passport')
 
 
 router.get('/signup',function(req,res){
-    res.render('user/signup')
+    res.render('user/signup',{
+        currentUser : req.user
+    })
 })
 
 router.post('/signup',function(req,res){
@@ -13,7 +15,9 @@ router.post('/signup',function(req,res){
     User.register(new User({username: req.body.username}), req.body.password, function(err, user){
         if(err){
             console.log('auth error',err)
-            return res.render('user/signup')
+            return res.render('user/signup',{
+                currentUser : req.user
+            })
         }
         passport.authenticate('local')(req, res, function(){
             res.redirect('/campgrounds')
@@ -25,7 +29,9 @@ router.post('/signup',function(req,res){
 //LOGIN ROUTES
 
 router.get('/login',function(req,res){
-    res.render('user/login')
+    res.render('user/login',{
+        currentUser : req.user
+    })
 })
 
     //middleware

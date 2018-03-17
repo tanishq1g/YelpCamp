@@ -60,7 +60,9 @@ app.use('/auths', authRoutes);
 
 //landing page
 app.get('/',function(req,res){
-    res.render("landing");
+    res.render("landing",{
+        currentUser : req.user
+    });
 });
 
 

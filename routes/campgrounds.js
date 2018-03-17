@@ -17,7 +17,11 @@ router.get('/',function(req,res){
         }
         else{
             //redirect to campgrounds page
-            res.render('campgrounds/index',{campgrounds: allcampgrounds});
+            console.log(req.user);
+            res.render('campgrounds/index',{
+                campgrounds: allcampgrounds,
+                currentUser : req.user
+            });
         }
     });
 });
@@ -43,7 +47,9 @@ router.post('/', function(req,res){
 
 //NEW - GET - /dogs/new - to show the form that will call the post route
 router.get('/new',function(req,res){
-    res.render('campgrounds/new');
+    res.render('campgrounds/new',{
+        currentUser : req.user
+    });
 });
 
 //SHOW - GET - shows info about 1 campground
@@ -56,7 +62,8 @@ router.get('/:id',function(req,res){
         } else {
             console.log(foundCampground);
             res.render("campgrounds/show", {
-                campground: foundCampground
+                campground: foundCampground,
+                currentUser : req.user
             });
         }
     });

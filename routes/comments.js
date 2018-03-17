@@ -12,7 +12,10 @@ router.get('/new',isLoggedIn, function(req,res){
             console.log(err)
         }
         else {
-            res.render('comments/new',{campground: foundCampground});
+            res.render('comments/new',{
+                campground: foundCampground,
+                currentUser : req.user
+            });
         }
     });
 });

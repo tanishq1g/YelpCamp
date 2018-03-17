@@ -21,15 +21,18 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/auths/login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/auths/signup">SignUp</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/auths/logout">Logout</a>
-                    </li>
+                    <% if(!currentUser){ %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/auths/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/auths/signup">SignUp</a>
+                        </li>
+                    <% } else{ %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/auths/logout">Logout</a>
+                        </li>
+                    <% } %>
                 </ul>
             </div>
         </nav>

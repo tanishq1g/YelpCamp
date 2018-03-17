@@ -32,32 +32,32 @@ function seedDB(){
     });
 
     //add a few comments
-    data.forEach(function(seed){
-        Campground.create(seed, function(err, campground){
-            if(err){
-                console.log(err)
-            }
-            else {
-                console.log("added a campground");
-                //create a comment
-                Comment.create(
-                {
-                    text: "This place is great, but I wish there was internet",
-                    author: "Homer"
-                }, function(err, comment){
-                    if(err){
-                        console.log("ERROR in COMMENTS");
-                        console.log(err);
-                    } else {
-                        campground.comments.push(comment.id);
-                        campground.save();
-                        console.log("Created new comment");
-                        // console.log(campground);
-                    }
-                });
-            }
-        });
-    });
+    // data.forEach(function(seed){
+    //     Campground.create(seed, function(err, campground){
+    //         if(err){
+    //             console.log(err)
+    //         }
+    //         else {
+    //             console.log("added a campground");
+    //             //create a comment
+    //             Comment.create(
+    //             {
+    //                 text: "This place is great, but I wish there was internet",
+    //                 author: "Homer"
+    //             }, function(err, comment){
+    //                 if(err){
+    //                     console.log("ERROR in COMMENTS");
+    //                     console.log(err);
+    //                 } else {
+    //                     campground.comments.push(comment.id);
+    //                     campground.save();
+    //                     console.log("Created new comment");
+    //                     // console.log(campground);
+    //                 }
+    //             });
+    //         }
+    //     });
+    // });
 }
 
 module.exports = seedDB;

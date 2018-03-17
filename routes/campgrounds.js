@@ -37,10 +37,11 @@ router.post('/', function(req,res){
     //create a new campground and save to database
     Campground.create(newCampground, function(err, newlyCreated){
         if(err){
-            console.log(err);
+            console.log("error in creating campground",err);
         }
         else{
-            res.redirect('campgrounds/index');
+            console.log('campground created successfully',newlyCreated);
+            res.redirect('/campgrounds/');
         }
     });
     // campgrounds.push({name: name, image: image});
@@ -54,13 +55,13 @@ router.get('/new',function(req,res){
 
 //SHOW - GET - shows info about 1 campground
 router.get('/:id',function(req,res){
-    console.log(req.params.id);
+    // console.log(req.params.id);
     //find the campground with provided id and then show the prticular campground
     Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground) {
         if (err) {
             console.log(err);
         } else {
-            console.log(foundCampground);
+            // console.log(foundCampground);
             res.render("campgrounds/show", {
                 campground: foundCampground
             });
@@ -70,6 +71,7 @@ router.get('/:id',function(req,res){
 
 //CREATE - POST - add content to db
 router.post('/:id/comments',function(req,res){
+    console.log('comment add post route');
     Campground.findById(req.params.id, function(err, foundCampground){
         if(err){
             console.log(err);
@@ -81,6 +83,9 @@ router.post('/:id/comments',function(req,res){
                     console.log(err);
                 }
                 else{
+                    createdComment.author.id = req.user._id
+                    createdComment.author.username = req.user.username
+                    createdComment.save()
                     console.log(createdComment);
                     foundCampground.comments.push(createdComment);
                     foundCampground.save();

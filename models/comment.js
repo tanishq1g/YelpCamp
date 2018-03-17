@@ -1,10 +1,16 @@
-//connecting to database
-var mongoose = require('mongoose');
-// mongoose.connect("mongodb://localhost/yelp_camp");
+var mongoose = require("mongoose");
 
-//SCHEMA setup
-var commentSchema = new mongoose.Schema({
-    text: String,
-    author: String
+var commentSchema = mongoose.Schema({
+  text: String,
+  author: {
+      id:{
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User"
+      },
+      username: String
+  }
 });
-module.exports = mongoose.model('Comment', commentSchema);
+
+var Comment = mongoose.model("Comment", commentSchema);
+
+module.exports = Comment;

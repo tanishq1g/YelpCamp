@@ -26,7 +26,7 @@ mongoose.Promise = global.Promise;
 
 app.use(express.static(__dirname + '/public'));
 console.log(__dirname);
-seedDB();
+// seedDB();
 
 
 
@@ -59,7 +59,7 @@ app.use('/campgrounds/:id/comments', commentRoutes);
 app.use('/auths', authRoutes);
 
 
-//to call the function on every route
+//to call the function on ever
 app.use(function(req,res,next){
     res.locals.currentUser = req.user
     next()

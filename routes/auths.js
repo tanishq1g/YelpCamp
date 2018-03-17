@@ -20,4 +20,19 @@ router.post('/signup',function(req,res){
         })
     })
 })
+
+
+//LOGIN ROUTES
+
+router.get('/login',function(req,res){
+    res.render('user/login')
+})
+
+    //middleware
+router.post('/login', passport.authenticate('local' ,{
+    successRedirect : '/campgrounds',
+    failureRedirect : '/auths/login'
+}),function(req,res){
+
+})
 module.exports = router;

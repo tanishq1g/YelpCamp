@@ -4,7 +4,10 @@ var Campground = require('../models/campground');
 var Comment = require('../models/comment');
 
 
-
+router.use(function(req,res,next){
+    res.locals.currentUser = req.user
+    next()
+})
 
 
 //INDEX - GET  - displays list of all campgrounds
@@ -19,8 +22,7 @@ router.get('/',function(req,res){
             //redirect to campgrounds page
             console.log(req.user);
             res.render('campgrounds/index',{
-                campgrounds: allcampgrounds,
-                currentUser : req.user
+                campgrounds: allcampgrounds
             });
         }
     });
@@ -47,9 +49,7 @@ router.post('/', function(req,res){
 
 //NEW - GET - /dogs/new - to show the form that will call the post route
 router.get('/new',function(req,res){
-    res.render('campgrounds/new',{
-        currentUser : req.user
-    });
+    res.render('campgrounds/new');
 });
 
 //SHOW - GET - shows info about 1 campground
@@ -62,8 +62,7 @@ router.get('/:id',function(req,res){
         } else {
             console.log(foundCampground);
             res.render("campgrounds/show", {
-                campground: foundCampground,
-                currentUser : req.user
+                campground: foundCampground
             });
         }
     });

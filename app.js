@@ -58,11 +58,15 @@ app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
 app.use('/auths', authRoutes);
 
+
+
+app.use(function(req,res,next){
+    res.locals.currentUser = req.user
+    next()
+})
 //landing page
 app.get('/',function(req,res){
-    res.render("landing",{
-        currentUser : req.user
-    });
+    res.render("landing");
 });
 
 

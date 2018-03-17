@@ -4,6 +4,10 @@ var Campground = require('../models/campground');
 var Comment = require('../models/comment');
 var passport = require('passport')
 
+router.use(function(req,res,next){
+    res.locals.currentUser = req.user
+    next()
+})
 
 //NEW - get - to get the form to add new comment and then call the post route
 router.get('/new',isLoggedIn, function(req,res){
@@ -13,8 +17,7 @@ router.get('/new',isLoggedIn, function(req,res){
         }
         else {
             res.render('comments/new',{
-                campground: foundCampground,
-                currentUser : req.user
+                campground: foundCampground
             });
         }
     });
